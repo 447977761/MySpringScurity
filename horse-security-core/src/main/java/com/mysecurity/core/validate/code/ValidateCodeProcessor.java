@@ -8,7 +8,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 /**
  * 校验码处理器，封装不同校验码的处理逻辑
  * 
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public interface ValidateCodeProcessor {

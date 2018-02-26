@@ -14,7 +14,7 @@ import com.mysecurity.core.validate.code.ValidateCodeGenerator;
 
 
 /**
- * @author zhailiang
+ * @author Liziyue
  *
  */
 @Component("smsValidateCodeGenerator")

@@ -16,7 +16,7 @@ import com.mysecurity.core.validate.code.sms.SmsCodeSender;
 
 
 /**
- * @author zhailiang
+ * @author Liziyue
  *
  */
 @Configuration

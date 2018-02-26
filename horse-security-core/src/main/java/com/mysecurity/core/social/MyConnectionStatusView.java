@@ -19,7 +19,7 @@ import org.springframework.web.servlet.view.AbstractView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * @author zhailiang
+ * @author Liziyue
  *
  */
 @Component("connect/status")

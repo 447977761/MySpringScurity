@@ -4,7 +4,7 @@
 package com.mysecurity.core.properties;
 
 /**
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public class SocialProperties {

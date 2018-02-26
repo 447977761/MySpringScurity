@@ -23,7 +23,7 @@ import com.mysecurity.core.properties.SecurityProperties;
 
 
 /**
- * @author zhailiang
+ * @author Liziyue
  *
  */
 @Configuration

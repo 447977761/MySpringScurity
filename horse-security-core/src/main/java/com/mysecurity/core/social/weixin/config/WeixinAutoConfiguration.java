@@ -22,7 +22,7 @@ import com.mysecurity.core.social.weixin.connect.WeixinConnectionFactory;
 /**
  * Œ¢–≈µ«¬º≈‰÷√
  * 
- * @author zhailiang
+ * @author Liziyue
  *
  */
 @Configuration

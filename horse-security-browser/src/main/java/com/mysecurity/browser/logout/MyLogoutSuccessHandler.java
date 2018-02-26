@@ -23,7 +23,7 @@ import com.mysecurity.browser.support.SimpleResponse;
  * 默认的退出成功处理器，如果设置了com.mysecurity.browser.signOutUrl，则跳到配置的地址上，
  * 如果没配置，则返回json格式的响应。
  * 
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public class MyLogoutSuccessHandler implements LogoutSuccessHandler {

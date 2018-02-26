@@ -18,7 +18,7 @@ import com.mysecurity.core.properties.SecurityProperties;
 /**
  * 默认的session失效处理策略
  * 
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public class MyInvalidSessionStrategy extends AbstractSessionStrategy implements InvalidSessionStrategy {

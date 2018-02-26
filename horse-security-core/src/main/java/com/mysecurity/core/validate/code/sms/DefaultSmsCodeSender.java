@@ -4,7 +4,7 @@
 package com.mysecurity.core.validate.code.sms;
 
 /**
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public class DefaultSmsCodeSender implements SmsCodeSender {

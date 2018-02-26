@@ -6,7 +6,7 @@ package com.mysecurity.core.social.weixin.api;
 /**
  * 微信用户信息
  * 
- * @author zhailiang
+ * @author Liziyue
  */
 public class WeixinUserInfo {
 	

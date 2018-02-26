@@ -18,7 +18,7 @@ import com.mysecurity.core.social.weixin.api.Weixin;
 /**
  * 微信连接工厂
  * 
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public class WeixinConnectionFactory extends OAuth2ConnectionFactory<Weixin> {

@@ -24,7 +24,7 @@ import com.mysecurity.core.properties.SecurityProperties;
 /**
  * 抽象的session失效处理器
  * 
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public class AbstractSessionStrategy {

@@ -17,7 +17,7 @@ import com.mysecurity.core.properties.SecurityProperties;
 /**
  * 并发登录导致session失效时，默认的处理策略
  * 
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public class MyExpiredSessionStrategy extends AbstractSessionStrategy implements SessionInformationExpiredStrategy {

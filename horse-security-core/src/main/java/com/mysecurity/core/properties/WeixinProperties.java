@@ -6,7 +6,7 @@ package com.mysecurity.core.properties;
 import org.springframework.boot.autoconfigure.social.SocialProperties;
 
 /**
- * @author zhailiang
+ * @author Liziyue
  *
  */
 public class WeixinProperties extends SocialProperties {
