@@ -1,0 +1,57 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.mysecurity.core.properties.SecurityProperties;
+import com.mysecurity.core.validate.code.image.ImageCodeGenerator;
+import com.mysecurity.core.validate.code.sms.DefaultSmsCodeSender;
+import com.mysecurity.core.validate.code.sms.SmsCodeSender;
+
+/**
+ * @author Liziyue
+ *
+ */
+@Configuration
+public class ValidateBeanConfig {
+	
+	@Autowired
+	private SecurityProperties securityProperties;
+	
+	
+	//@ConditionalOnMissingBean在系统启动的时候系统在初始化这个bean的时候先会去找有没有一个叫imageCodeGenerator的类
+	//如果能够找到，就不会使用imageCodeGenerator这个我们写的默认生成方式，会去执行另一个叫imageCodeGenerator类
+	//用户自定义的验证码生成器必须继承imageCodeGenerator 必须加上配置@Compoment("imageCodeGenerator")
+	@Bean
+	@ConditionalOnMissingBean(name="imageCodeGenerator")
+	public ValidateCodeGenerator imageCodeGenerator() {
+		ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
+		codeGenerator.setSecurityProperties(securityProperties);
+		return codeGenerator;		
+	}
+	
+	//短信验证码可重写控制器
+	@Bean
+	@ConditionalOnMissingBean(name="smsCodeSender")
+	public SmsCodeSender smsCodeSender() {
+		SmsCodeSender smsCodeSender = new DefaultSmsCodeSender();
+		return smsCodeSender;		
+	}
+	
+	public SecurityProperties getSecurityProperties() {
+		return securityProperties;
+	}
+
+	public void setSecurityProperties(SecurityProperties securityProperties) {
+		this.securityProperties = securityProperties;
+	}
+	
+	
+	
+	
+}

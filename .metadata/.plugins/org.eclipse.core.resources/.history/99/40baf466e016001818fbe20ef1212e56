@@ -1,0 +1,26 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code;
+
+import org.springframework.security.core.AuthenticationException;
+
+/**
+ * @author Liziyue
+ * 校验码校验异常
+ */
+public class ValidateCodeException extends AuthenticationException{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 817219736541343065L;
+
+	
+
+	public ValidateCodeException(String msg) {
+		super(msg);
+		// TODO Auto-generated constructor stub
+	}
+
+}

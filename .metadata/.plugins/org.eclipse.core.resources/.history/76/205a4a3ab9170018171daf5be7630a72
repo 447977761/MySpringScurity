@@ -1,0 +1,20 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social;
+
+import org.springframework.social.security.SpringSocialConfigurer;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class MySpringSocialConfigurer extends SpringSocialConfigurer {
+	
+	@Override
+	protected <T> T postProcess(T object) {
+		
+		return super.postProcess(object);
+	}
+	
+}

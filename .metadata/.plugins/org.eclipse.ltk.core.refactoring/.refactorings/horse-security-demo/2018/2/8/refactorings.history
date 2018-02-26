@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;MyUserDetailService.java&apos; to &apos;horse-security-browser/src/main/java/com.mysecurity.browser&apos;&#x0D;&#x0A;- Original project: &apos;horse-security-demo&apos;&#x0D;&#x0A;- Destination element: &apos;horse-security-browser/src/main/java/com.mysecurity.browser&apos;&#x0D;&#x0A;- Original element: &apos;com.security.MyUserDetailService.java&apos;" description="Copy compilation unit" destination="=horse-security-browser/src\/main\/java&lt;com.mysecurity.browser" element1="/src\/main\/java&lt;com.security{MyUserDetailService.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1519370465287" units="1" version="1.0"/>
+</session>

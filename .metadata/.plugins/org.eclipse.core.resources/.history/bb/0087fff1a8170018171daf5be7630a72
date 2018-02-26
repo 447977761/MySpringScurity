@@ -1,0 +1,16 @@
+/**
+ * 
+ */
+package com.mysecurity.core.properties;
+
+import org.springframework.boot.autoconfigure.social.SocialProperties;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQProperties extends SocialProperties {
+	
+	private String providerId = "qq";
+	
+}

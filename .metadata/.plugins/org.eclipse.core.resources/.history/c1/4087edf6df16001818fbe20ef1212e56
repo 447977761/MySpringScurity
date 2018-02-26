@@ -1,0 +1,16 @@
+/**
+ * 
+ */
+package com.mysecurity.core.properties;
+
+/**
+ * @author Liziyue
+ *
+ */
+public enum LoginType {
+	
+	//枚举 分为返回redirect和json
+	REDIRECT,
+	
+	JSON
+}

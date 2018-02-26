@@ -1,0 +1,50 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code.sms;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.Random;
+
+import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.context.request.ServletWebRequest;
+
+import com.mysecurity.core.properties.SecurityProperties;
+import com.mysecurity.core.validate.code.ValidateCode;
+import com.mysecurity.core.validate.code.ValidateCodeGenerator;
+
+/**
+ * @author Liziyue
+ * 短信验证码生成器
+ * 由于图形验证码有各式各样的逻辑因此不加compoment
+ */
+@Component("smsCodeGenerator")
+public class SmsCodeGenerator implements ValidateCodeGenerator {
+	
+	@Autowired
+	private SecurityProperties securityProperties;
+	
+	/* (non-Javadoc)
+	 * @see com.mysecurity.core.validate.code.ValidateCodeGenerator#generate(org.springframework.web.context.request.ServletWebRequest)
+	 */
+	@Override
+	public ValidateCode generate(ServletWebRequest request) {
+		String code = RandomStringUtils.randomNumeric(securityProperties.getCode().getSmsCodeProperties().getLength());
+		return new ValidateCode(code, securityProperties.getCode().getSmsCodeProperties().getExpireIn());
+	}
+	
+	
+	public SecurityProperties getSecurityProperties() {
+		return securityProperties;
+	}
+
+	public void setSecurityProperties(SecurityProperties securityProperties) {
+		this.securityProperties = securityProperties;
+	}	
+}

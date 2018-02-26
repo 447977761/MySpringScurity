@@ -1,0 +1,49 @@
+/**
+ * 
+ */
+package com.mysecurity.core.properties;
+
+/**
+ * @author zhailiang
+ *
+ */
+public class SessionProperties {
+	
+	/**
+	 * 鍚屼竴涓敤鎴峰湪绯荤粺涓殑鏈�澶ession鏁帮紝榛樿1
+	 */
+	private int maximumSessions = 1;
+	/**
+	 * 杈惧埌鏈�澶ession鏃舵槸鍚﹂樆姝㈡柊鐨勭櫥褰曡姹傦紝榛樿涓篺alse锛屼笉闃绘锛屾柊鐨勭櫥褰曚細灏嗚�佺殑鐧诲綍澶辨晥鎺�
+	 */
+	private boolean maxSessionsPreventsLogin;
+	/**
+	 * session澶辨晥鏃惰烦杞殑鍦板潃
+	 */
+	private String sessionInvalidUrl = SecurityConstants.DEFAULT_SESSION_INVALID_URL;
+
+	public int getMaximumSessions() {
+		return maximumSessions;
+	}
+
+	public void setMaximumSessions(int maximumSessions) {
+		this.maximumSessions = maximumSessions;
+	}
+
+	public boolean isMaxSessionsPreventsLogin() {
+		return maxSessionsPreventsLogin;
+	}
+
+	public void setMaxSessionsPreventsLogin(boolean maxSessionsPreventsLogin) {
+		this.maxSessionsPreventsLogin = maxSessionsPreventsLogin;
+	}
+
+	public String getSessionInvalidUrl() {
+		return sessionInvalidUrl;
+	}
+
+	public void setSessionInvalidUrl(String sessionInvalidUrl) {
+		this.sessionInvalidUrl = sessionInvalidUrl;
+	}
+	
+}

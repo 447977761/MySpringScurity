@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.api;
+
+
+
+/**
+ * @author Liziyue
+ *
+ */
+public interface QQ {
+	QQUserInfo getUserInfo();
+}

@@ -1,0 +1,39 @@
+/**
+ * 
+ */
+package com.mysecurity.core.properties;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+
+/**
+ * @author Liziyue
+ *
+ */
+//配置properties  表示这个类会读取�?有com.mysecurity�?头的配置�?
+@ConfigurationProperties(prefix = "com.mysecurity")
+public class SecurityProperties {
+	
+	//browser方面的会读到BrowserProperties里面�?
+	private BrowserProperties browserProperties = new BrowserProperties();
+	
+	//验证码默认配置信�?
+	private ValidateCodeProperties code = new ValidateCodeProperties();
+	
+	public BrowserProperties getBrowserProperties() {
+		return browserProperties;
+	}
+
+	public void setBrowserProperties(BrowserProperties browserProperties) {
+		this.browserProperties = browserProperties;
+	}
+
+	public ValidateCodeProperties getCode() {
+		return code;
+	}
+
+	public void setCode(ValidateCodeProperties code) {
+		this.code = code;
+	}	
+	
+}

@@ -1,0 +1,28 @@
+1519200530690	Delete elements
+1519200624601	Delete elements
+1519200694224	Move compilation units
+1519200725101	Rename package 'browser.authentication'
+1519200728283	Copy package
+1519200738309	Delete element
+1519200775648	Delete elements
+1519200799919	Rename package 'browser'
+1519200836443	Move compilation units
+1519200851464	Copy compilation unit
+1519200869743	Move compilation unit
+1519201011442	Delete elements
+1519201732116	Delete element
+1519212513400	Delete element
+1519287355108	Copy compilation unit
+1519287360767	Delete element
+1519354248008	Rename resource 'imooc-signUp.html'
+1519443324870	Rename type 'ImoocExpiredSessionStrategy'
+1519446040993	Rename type 'ImoocInvalidSessionStrategy'
+1519458664071	Rename resource 'imooc-logout.html'
+1519459339750	Rename type 'ImoocLogoutSuccessHandler'
+1519461727036	Delete element
+1519461732608	Delete elements
+1519461740397	Rename resource 'imooc-banding.html'
+1519461747900	Rename resource 'imooc-logout.html'
+1519461759560	Rename resource 'imooc-session-invalid.html'
+1519461765607	Rename resource 'imooc-signIn.html'
+1519461771048	Rename resource 'imooc-signUp.html'

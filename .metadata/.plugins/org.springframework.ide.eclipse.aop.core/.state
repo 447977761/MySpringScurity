@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="horse-security-app"/>
+<aop-project name="horse-security-browser"/>
+<aop-project name="horse-security-core"/>
+<aop-project name="horse-security-demo"/>
+</aop-reference-model>

@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code.sms;
+
+/**
+ * @author Liziyue
+ *
+ */
+public interface SmsCodeSender {
+	
+	//发送方法mobile是哪部手机  code表示短信验证码是什么
+	void send(String mobile,String code);
+}

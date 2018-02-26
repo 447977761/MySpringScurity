@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.connect;
+
+import org.springframework.social.oauth2.OAuth2Template;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQAuth2Template extends OAuth2Template {
+
+}

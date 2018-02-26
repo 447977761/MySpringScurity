@@ -1,0 +1,25 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.connect;
+
+import org.springframework.social.connect.ApiAdapter;
+import org.springframework.social.connect.support.OAuth2ConnectionFactory;
+import org.springframework.social.oauth2.OAuth2ServiceProvider;
+
+import com.mysecurity.core.social.qq.api.QQ;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQConnectionFactory extends OAuth2ConnectionFactory<QQ> {
+	
+	//providerId提供商的唯一标识
+	public QQConnectionFactory(String providerId, OAuth2ServiceProvider<QQ> serviceProvider,
+			ApiAdapter<QQ> apiAdapter) {
+		super(providerId, new QQServiceProvider(appId, appSecret), apiAdapter);
+		// TODO Auto-generated constructor stub
+	}
+
+}

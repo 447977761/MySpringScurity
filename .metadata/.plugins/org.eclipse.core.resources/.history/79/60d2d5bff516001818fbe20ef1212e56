@@ -1,0 +1,135 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+
+
+/**
+ * @author zhailiang
+ *
+ */
+@Component("validateCodeFilter")
+public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
+
+	/**
+	 * 楠岃瘉鐮佹牎楠屽け璐ュ鐞嗗櫒
+	 */
+	@Autowired
+	private AuthenticationFailureHandler authenticationFailureHandler;
+	/**
+	 * 绯荤粺閰嶇疆淇℃伅
+	 */
+	@Autowired
+	private SecurityProperties securityProperties;
+	/**
+	 * 绯荤粺涓殑鏍￠獙鐮佸鐞嗗櫒
+	 */
+	@Autowired
+	private ValidateCodeProcessorHolder validateCodeProcessorHolder;
+	/**
+	 * 瀛樻斁鎵�鏈夐渶瑕佹牎楠岄獙璇佺爜鐨剈rl
+	 */
+	private Map<String, ValidateCodeType> urlMap = new HashMap<>();
+	/**
+	 * 楠岃瘉璇锋眰url涓庨厤缃殑url鏄惁鍖归厤鐨勫伐鍏风被
+	 */
+	private AntPathMatcher pathMatcher = new AntPathMatcher();
+
+	/**
+	 * 鍒濆鍖栬鎷︽埅鐨剈rl閰嶇疆淇℃伅
+	 */
+	@Override
+	public void afterPropertiesSet() throws ServletException {
+		super.afterPropertiesSet();
+
+		urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
+		addUrlToMap(securityProperties.getCode().getImage().getUrl(), ValidateCodeType.IMAGE);
+
+		urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, ValidateCodeType.SMS);
+		addUrlToMap(securityProperties.getCode().getSms().getUrl(), ValidateCodeType.SMS);
+	}
+
+	/**
+	 * 璁茬郴缁熶腑閰嶇疆鐨勯渶瑕佹牎楠岄獙璇佺爜鐨刄RL鏍规嵁鏍￠獙鐨勭被鍨嬫斁鍏ap
+	 * 
+	 * @param urlString
+	 * @param type
+	 */
+	protected void addUrlToMap(String urlString, ValidateCodeType type) {
+		if (StringUtils.isNotBlank(urlString)) {
+			String[] urls = StringUtils.splitByWholeSeparatorPreserveAllTokens(urlString, ",");
+			for (String url : urls) {
+				urlMap.put(url, type);
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(
+	 * javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
+	 */
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws ServletException, IOException {
+
+		ValidateCodeType type = getValidateCodeType(request);
+		if (type != null) {
+			logger.info("鏍￠獙璇锋眰(" + request.getRequestURI() + ")涓殑楠岃瘉鐮�,楠岃瘉鐮佺被鍨�" + type);
+			try {
+				validateCodeProcessorHolder.findValidateCodeProcessor(type)
+						.validate(new ServletWebRequest(request, response));
+				logger.info("楠岃瘉鐮佹牎楠岄�氳繃");
+			} catch (ValidateCodeException exception) {
+				authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
+				return;
+			}
+		}
+
+		chain.doFilter(request, response);
+
+	}
+
+	/**
+	 * 鑾峰彇鏍￠獙鐮佺殑绫诲瀷锛屽鏋滃綋鍓嶈姹備笉闇�瑕佹牎楠岋紝鍒欒繑鍥瀗ull
+	 * 
+	 * @param request
+	 * @return
+	 */
+	private ValidateCodeType getValidateCodeType(HttpServletRequest request) {
+		ValidateCodeType result = null;
+		if (!StringUtils.equalsIgnoreCase(request.getMethod(), "get")) {
+			Set<String> urls = urlMap.keySet();
+			for (String url : urls) {
+				if (pathMatcher.match(url, request.getRequestURI())) {
+					result = urlMap.get(url);
+				}
+			}
+		}
+		return result;
+	}
+
+}

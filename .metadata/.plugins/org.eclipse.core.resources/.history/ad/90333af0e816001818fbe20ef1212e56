@@ -1,0 +1,143 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code.Impl;
+
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.web.HttpSessionSessionStrategy;
+import org.springframework.social.connect.web.SessionStrategy;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.context.request.ServletWebRequest;
+
+import com.mysecurity.core.validate.code.ValidateCode;
+import com.mysecurity.core.validate.code.ValidateCodeController;
+import com.mysecurity.core.validate.code.ValidateCodeException;
+import com.mysecurity.core.validate.code.ValidateCodeGenerator;
+import com.mysecurity.core.validate.code.ValidateCodeProcessor;
+import com.mysecurity.core.validate.code.image.ImageCode;
+
+
+
+/**
+ * @author zhailiang
+ *
+ */
+public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
+
+	/**
+	 * 操作session的工具类
+	 */
+	private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+	/**
+	 * 收集系统中所有的 {@link ValidateCodeGenerator} 接口的实现�??
+	 */
+	@Autowired
+	private Map<String, ValidateCodeGenerator> validateCodeGenerators;
+	
+	
+	String type="";
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.imooc.security.core.validate.code.ValidateCodeProcessor#create(org.
+	 * springframework.web.context.request.ServletWebRequest)
+	 */
+	@Override
+	public void create(ServletWebRequest request) throws Exception {
+		C validateCode = generate(request);
+		save(request, validateCode);
+		send(request, validateCode);
+	}
+
+	/**
+	 * 生成校验�?
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private C generate(ServletWebRequest request) {
+		type = getProcessType(request);
+		ValidateCodeGenerator validateCodeGenerator = validateCodeGenerators.get(type+"CodeGenerator");
+		return (C) validateCodeGenerator.generate(request);
+	}
+
+	/**
+	 * 保存校验�?
+	 * 
+	 * @param request
+	 * @param validateCode
+	 */
+	private void save(ServletWebRequest request, C validateCode) {
+		sessionStrategy.setAttribute(request, SESSION_KEY_PREFIX+getProcessType(request).toUpperCase(), validateCode);
+	}
+
+	
+	/**
+	 * 发�?�校验码，由子类实现
+	 * 
+	 * @param request
+	 * @param validateCode
+	 * @throws Exception
+	 */
+	protected abstract void send(ServletWebRequest request, C validateCode) throws Exception;
+
+	/**
+	 * 根据请求的url获取校验码的类型
+	 * 
+	 * @param request
+	 * @return
+	 */
+	private String getProcessType(ServletWebRequest request) {
+		return StringUtils.substringAfter(request.getRequest().getRequestURI(), "/code/");
+	}
+	
+	/**
+	 * 校验验证�?
+	 * 
+	 * @param servletWebRequest
+	 * @throws ServletRequestBindingException 
+	 * @throws Exception
+	 */
+	@Override
+	public void validate(ServletWebRequest servletWebRequest) {
+		
+			
+			//从session里面拿出之前放的imagecode
+			ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(servletWebRequest, ValidateCodeProcessor.SESSION_KEY_PREFIX+"IMAGE");
+			
+			//从请求里拿到imagecode参数     就是前台页面里输入的name="imagecode"的�??
+			String codeInRequest="";
+			try {
+				codeInRequest = ServletRequestUtils.getStringParameter(servletWebRequest.getRequest(), "imageCode");
+			} catch (ServletRequestBindingException e) {
+				e.printStackTrace();
+			}
+					
+			if (StringUtils.isBlank(codeInRequest)) {
+				throw new ValidateCodeException("验证码的值不能为�?");
+			}
+
+			if (codeInSession == null) {
+				throw new ValidateCodeException("验证码不存在");
+			}
+
+			if (codeInSession.isExpried()) {
+				//移除session
+				sessionStrategy.removeAttribute(servletWebRequest,ValidateCodeProcessor.SESSION_KEY_PREFIX+"IMAGE");
+				throw new ValidateCodeException("验证码已过期");
+			}
+			
+			//比对session和用户填的是否一�?
+			if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
+				throw new ValidateCodeException("验证码不匹配");
+			}
+
+			sessionStrategy.removeAttribute(servletWebRequest, ValidateCodeProcessor.SESSION_KEY_PREFIX+"IMAGE");
+		}
+}

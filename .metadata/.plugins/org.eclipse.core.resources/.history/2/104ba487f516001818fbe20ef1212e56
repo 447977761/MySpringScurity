@@ -1,0 +1,58 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code;
+
+import java.awt.image.BufferedImage;
+import java.time.LocalDateTime;
+
+/**
+ * @author Liziyue
+ * 短信验证码
+ */
+public class ValidateCode {
+	
+	
+	
+	//随机数字
+	private String code;
+	
+	//验证码过期时间点
+	private LocalDateTime expiretime;
+	
+	//expireIn为多少秒过期
+	public ValidateCode(String code, int expireIn) {
+		this.code = code;
+		this.expiretime = LocalDateTime.now().plusSeconds(expireIn);
+	}
+	
+
+	public ValidateCode(String code, LocalDateTime expiretime) {
+		this.code = code;
+		this.expiretime = expiretime;
+	}
+
+	
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public LocalDateTime getExpiretime() {
+		return expiretime;
+	}
+
+	public void setExpiretime(LocalDateTime expiretime) {
+		this.expiretime = expiretime;
+	}
+	
+	//判断验证码是否过期
+	public boolean isExpried() {
+		return LocalDateTime.now().isAfter(expiretime);
+	}
+	
+}

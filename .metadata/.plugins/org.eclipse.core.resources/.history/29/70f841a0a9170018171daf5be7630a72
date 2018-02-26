@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.config;
+
+import org.springframework.social.config.annotation.SocialConfigurerAdapter;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQSocialConfig extends SocialConfigurerAdapter {
+
+}

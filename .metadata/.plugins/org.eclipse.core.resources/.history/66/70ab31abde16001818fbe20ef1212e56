@@ -1,0 +1,146 @@
+/**
+ * 
+ */
+package com.mysecurity.browser;
+
+
+
+
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import com.mysecurity.browser.authentication.MyAuthenticationFailHandler;
+import com.mysecurity.browser.authentication.MyAuthenticationSuccessHandler;
+import com.mysecurity.core.authentication.AbstractChannelSecurityConfig;
+import com.mysecurity.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.mysecurity.core.properties.SecurityConstants;
+import com.mysecurity.core.properties.SecurityProperties;
+import com.mysecurity.core.validate.code.SmsCodeFilter;
+import com.mysecurity.core.validate.code.ValidateCodeFilter;
+import com.mysecurity.core.validate.code.ValidateCodeSecurityConfig;
+
+/**
+ * @author Liziyue
+ *
+ */
+//安全配置
+@Configuration
+public class BrowserSecurityConfig extends AbstractChannelSecurityConfig{
+	
+	
+	
+	
+	@Autowired
+	private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+	
+	
+	@Autowired
+	private SecurityProperties securityProperties;
+	
+	
+	@Autowired
+	private DataSource dataSource;
+	
+	
+	@Autowired
+	private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+	
+	
+	//当检查到takon  调用UserDetailsService去进行登录
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	
+	
+	
+	
+	//重写方法
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+//		//配置图形验证码
+//		ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+//		//设置自定义错误处理器
+//		validateCodeFilter.setAuthenticationFailureHandler(MyAuthenticationFailHandler);
+//		
+//		//把配置文件的配置传进去   并且调用初始化方法
+//		validateCodeFilter.setSecurityProperties(securityProperties);		
+//		validateCodeFilter.afterPropertiesSet();
+//		
+//		
+//		//配置短信验证码
+//		SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+//		//设置自定义错误处理器
+//		smsCodeFilter.setAuthenticationFailureHandler(MyAuthenticationFailHandler);
+//		
+//		//把配置文件的配置传进去   并且调用初始化方法
+//		smsCodeFilter.setSecurityProperties(securityProperties);		
+//		smsCodeFilter.afterPropertiesSet();
+//		
+		
+		//使用表单登录       authorizeRequests说明下面开始都是授权配置
+		//anyRequest表示任何请求  authenticated表示需要身份认证
+		//loginpage表示自定义登陆界面
+		//antMatchers为匹配器  antMatchers("/mylogin.html").permitAll()表示当我访问这个页面则不需要权限验证
+		//.loginProcessingUrl配置自定义表单提交路径 要和前台一致
+		//csrf表示跨站防护伪装
+		//successHandler登陆成功处理器配置
+		//addFilterBefore在什么什么filter之前添加filter
+		//rememberMe记住我的实现
+		//tokenValiditySeconds配置记住我过期时间
+		//userDetailsService配置userdetails去做登录
+		applyPasswordAuthenticationConfig(http);
+			
+		http.apply(validateCodeSecurityConfig)
+				.and()
+			.apply(smsCodeAuthenticationSecurityConfig)
+				.and()
+			.rememberMe()
+				.tokenRepository(persistentTokenRepository())
+				.tokenValiditySeconds(securityProperties.getBrowserProperties().getRemenberMeSeconds())
+				.userDetailsService(userDetailsService)
+				.and()
+			.authorizeRequests()
+				.antMatchers(
+						SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+						SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
+						securityProperties.getBrowserProperties().getLoginPage(),
+						SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*")
+					.permitAll()
+				.anyRequest()
+				.authenticated()
+				.and()
+			.csrf().disable();
+		
+	}
+	
+	
+	
+	//密码加密解密
+	@Bean
+	public PasswordEncoder passwordEncoder() {	
+		return new BCryptPasswordEncoder();
+	}
+	
+	//记住我登录
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+		//将配置信息中的数据库相关信息传入
+		tokenRepository.setDataSource(dataSource);
+		//自动创建token表
+//			tokenRepository.setCreateTableOnStartup(true);
+		return tokenRepository;
+	}
+}

@@ -1,0 +1,20 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.connect;
+
+import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQServiceProvider extends AbstractOAuth2ServiceProvider<S> {
+
+	@Override
+	public S getApi(String accessToken) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

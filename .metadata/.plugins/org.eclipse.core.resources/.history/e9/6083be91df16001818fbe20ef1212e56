@@ -1,0 +1,39 @@
+package com.mysecurity.core.properties;
+
+public class BrowserProperties {
+	
+	//默认值用户如果没配properties则默认跳转页面
+	private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
+	
+	//默认返回json
+	private LoginType loginType = LoginType.JSON;
+	
+	//记住我session存在时间  （一般都为一周以上）
+	private int remenberMeSeconds = 3600;
+	
+	
+	public String getLoginPage() {
+		return loginPage;
+	}
+
+	public void setLoginPage(String loginPage) {
+		this.loginPage = loginPage;
+	}
+
+	public LoginType getLoginType() {
+		return loginType;
+	}
+
+	public void setLoginType(LoginType loginType) {
+		this.loginType = loginType;
+	}
+
+	public int getRemenberMeSeconds() {
+		return remenberMeSeconds;
+	}
+
+	public void setRemenberMeSeconds(int remenberMeSeconds) {
+		this.remenberMeSeconds = remenberMeSeconds;
+	}
+
+}

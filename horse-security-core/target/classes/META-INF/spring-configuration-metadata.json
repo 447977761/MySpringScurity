@@ -1,0 +1,27 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.mysecurity.core.properties.SecurityProperties",
+      "name": "com.mysecurity",
+      "type": "com.mysecurity.core.properties.SecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.mysecurity.core.properties.SecurityProperties",
+      "name": "com.mysecurity.browser",
+      "type": "com.mysecurity.core.properties.BrowserProperties"
+    },
+    {
+      "sourceType": "com.mysecurity.core.properties.SecurityProperties",
+      "name": "com.mysecurity.code",
+      "type": "com.mysecurity.core.properties.ValidateCodeProperties"
+    },
+    {
+      "sourceType": "com.mysecurity.core.properties.SecurityProperties",
+      "name": "com.mysecurity.social",
+      "type": "com.mysecurity.core.properties.SocialProperties"
+    }
+  ]
+}

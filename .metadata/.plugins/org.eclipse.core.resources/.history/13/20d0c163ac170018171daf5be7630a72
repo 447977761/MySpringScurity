@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登陆界面</title>
+</head>
+<body>
+	<h1>标准登陆界面</h1>
+	<h3>表单登陆</h3>
+	<form action="/authentication/form" method="post">
+		用户名：<input type="text" name="username"><br>
+		密码：<input type="password" name="password"><br>
+		验证码：<input type="text" name="imageCode"><img src="/code/image">
+		<input type="checkbox" value="true" name="remember-me">记住我<br>
+		<input type="submit" value="登陆">
+	</form>
+	
+	
+	<h1>标准登陆界面</h1>
+	<h3>表单登陆</h3>
+	<form action="/authentication/mobile" method="post">
+		手机号：<input type="text" name="mobile" value="13016812138"><br>
+		<!-- 前端会通过ajax实现 现在这里仅做测试写 -->
+		短信验证码：<input type="text" name="smsCode"><a href="/code/sms?mobile=13016812138">发送验证码</a>
+		<input type="submit" value="登陆">
+	</form>
+	
+	<h1>社交登陆界面</h1>
+</body>
+</html>

@@ -1,0 +1,121 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.Console;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.web.HttpSessionSessionStrategy;
+import org.springframework.social.connect.web.SessionStrategy;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
+
+import com.mysecurity.core.properties.SecurityConstants;
+import com.mysecurity.core.properties.SecurityProperties;
+
+import com.mysecurity.core.validate.code.sms.SmsCodeSender;
+
+/**
+ * @author Liziyue
+ *
+ */
+@RestController
+public class ValidateCodeController {
+	
+	
+	
+	@Autowired
+	private ValidateCodeProcessorHolder validateCodeProcessorHolder;
+
+	/**
+	 * 创建验证码，根据验证码类型不同，调用不同的 {@link ValidateCodeProcessor}接口实现
+	 * 
+	 * @param request
+	 * @param response
+	 * @param type
+	 * @throws Exception
+	 */
+	@GetMapping(SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/{type}")
+	public void createCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String type)
+			throws Exception {
+		validateCodeProcessorHolder.findValidateCodeProcessor(type).create(new ServletWebRequest(request, response));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	
+//	//session中的key
+//	public static final String SESSION_KEY = "SESSION_KEY_IMAG_CODE";
+//	
+//	
+//	//工具类session
+//	private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+//	
+//	//这样就能变成一个验证码的接口 用户可以通过定义自己的验证码来配置进来
+//	@Autowired
+//	private ValidateCodeGenerator validateCodeGenerator;
+//	
+//	
+//	//短信验证码生成器
+//	@Autowired
+//	private SmsCodeSender smsCodeSender;
+//	
+//	
+//	//图形验证码请求
+//	@GetMapping("/code/image")
+//	public void createCode(HttpServletRequest request,HttpServletResponse response) throws IOException{
+//		
+//		//生成验证码
+//		ImageCode imageCode = (ImageCode) validateCodeGenerator.generate(new ServletWebRequest(request));
+//		
+//		//将验证码放到session中
+//		//第一个参数是把请求传进去 sessionStrategy就回去请求里拿session
+//		sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
+//		
+//		//写出去的图片   格式   响应输出流
+//		ImageIO.write(imageCode.getImg(), "JPEG", response.getOutputStream());
+//	}
+//	
+//	
+//	
+//	//短信验证码请求
+//	@GetMapping("/code/sms")
+//	public void createSmsCode(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletRequestBindingException{
+//		
+//		//生成验证码
+//		ValidateCode smsCode = validateCodeGenerator.generate(new ServletWebRequest(request));
+//		
+//		//将验证码放到session中
+//		//第一个参数是把请求传进去 sessionStrategy就回去请求里拿session
+//		sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, smsCode);
+//		//接受手机号   从请求里面拿
+//		String mobile = ServletRequestUtils.getStringParameter(request, "mobile");
+//		
+//		
+//		//调用发送短信方法
+//		smsCodeSender.send(mobile, smsCode.getCode());
+//	}
+	
+}

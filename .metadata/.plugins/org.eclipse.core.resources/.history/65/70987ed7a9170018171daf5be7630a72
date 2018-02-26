@@ -1,0 +1,30 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.config;
+
+import org.springframework.boot.autoconfigure.social.SocialAutoConfigurerAdapter;
+import org.springframework.social.connect.ConnectionFactory;
+
+import com.mysecurity.core.properties.SecurityProperties;
+import com.mysecurity.core.social.qq.connect.QQConnectionFactory;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQAutoConfig extends SocialAutoConfigurerAdapter {
+	
+	
+	private SecurityProperties SecurityProperties
+	
+	/* (non-Javadoc)
+	 * @see org.springframework.boot.autoconfigure.social.SocialAutoConfigurerAdapter#createConnectionFactory()
+	 */
+	@Override
+	protected ConnectionFactory<?> createConnectionFactory() {
+		
+		return new QQConnectionFactory(providerId, appId, appSecret);
+	}
+
+}

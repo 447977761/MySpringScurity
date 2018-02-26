@@ -1,0 +1,50 @@
+/**
+ * 
+ */
+package com.mysecurity.browser;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author Liziyue
+ *
+ */
+@Component("userDetailsService")
+public class MyUserDetailService implements UserDetailsService{
+	
+	//可以连接数据库去数据库里查找用户   在下面details中调用dao的方法来查找
+//	@Autowired
+//	private UserDao userDao;
+	
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
+	//一般从数据库中调出来都为加密  现在为了方便
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		//根据用户名查找用户信息
+		logger.info("登录用户名："+username);
+		
+		//根据查找的用户信息是否被冻结 并将结果告诉security
+		System.out.println(passwordEncoder.encode("123456"));
+		//encode表示加密
+		//后期需要加数据库可以将自己的实体类来实现UserDetails 将方法传进去最后返回就ok
+		//第一个true代表可用的，第二个代表没过期，第三个是密码没过期，第四个是没被锁定
+		//这里的user是security自带的user  需要传入用户名，密码，权限 (下面写的方法是将字符窜转换为需要的权限对象 admin是随便给的)
+		return new User(username, passwordEncoder.encode("123456"), true,true,true,true,AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+	}
+
+}

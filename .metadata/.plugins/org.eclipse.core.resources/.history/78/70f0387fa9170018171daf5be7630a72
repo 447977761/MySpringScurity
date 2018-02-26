@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.config;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQAutoConfig {
+
+}

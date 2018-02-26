@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.connect;
+
+import org.springframework.social.connect.ApiAdapter;
+import org.springframework.social.connect.ConnectionValues;
+import org.springframework.social.connect.UserProfile;
+
+/**
+ * @author Liziyue
+ * ∑∫–Õapi¿‡–Õ
+ */
+public class QQAdapter implements ApiAdapter<QQ> {
+
+	
+
+}

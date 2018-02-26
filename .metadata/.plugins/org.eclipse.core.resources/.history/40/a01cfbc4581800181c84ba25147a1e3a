@@ -1,0 +1,66 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social;
+
+
+
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.annotation.AccessType;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.social.config.annotation.EnableSocial;
+import org.springframework.social.config.annotation.SocialConfigurerAdapter;
+import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
+import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.social.security.SpringSocialConfigurer;
+
+import com.mysecurity.core.properties.SecurityProperties;
+
+/**
+ * @author Liziyue
+ *
+ */
+@Configuration
+@EnableSocial
+public class SocialConfig extends SocialConfigurerAdapter {
+	
+	//数据库信息注入
+	@Autowired
+	private DataSource dataSource;
+	
+	@Autowired
+	private SecurityProperties securityProperties;
+	
+	@Autowired
+	private ConnectionFactoryLocator connectionFactoryLocator;
+	
+	
+	//Encryptors.noOpText()用于对数据加解密
+	@Override
+	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+		return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
+	}
+	
+	
+	@Bean
+	public SpringSocialConfigurer MySocialSecurityConfig() { 	
+		String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
+		MySpringSocialConfigurer configurer = new MySpringSocialConfigurer(filterProcessesUrl);
+		//找不到用户就跳转页面
+		configurer.signupUrl(securityProperties.getBrowser().getSingUpUrl());
+		return configurer;		
+	}
+	
+	@Bean
+	public ProviderSignInUtils providerSignInUtils() {
+		return new ProviderSignInUtils();		
+	}
+	
+}

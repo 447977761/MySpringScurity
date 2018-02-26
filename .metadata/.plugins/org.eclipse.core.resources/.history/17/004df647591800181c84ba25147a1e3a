@@ -1,0 +1,23 @@
+/**
+ * 
+ */
+package com.mysecurity.browser.support;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class SocialUserInfo {
+	
+	private String providerId;
+	
+	//openid
+	private String providerUserId;
+	
+	//用户昵称
+	private String nickname;
+	
+	//用户头像
+	private String headimg;
+	
+}

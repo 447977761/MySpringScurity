@@ -1,0 +1,39 @@
+/**
+ * 
+ */
+package com.mysecurity.core.validate.code;
+
+
+
+/**
+ * @author zhailiang
+ *
+ */
+public enum ValidateCodeType {
+	
+	/**
+	 * 鐭俊楠岃瘉鐮�
+	 */
+	SMS {
+		@Override
+		public String getParamNameOnValidate() {
+			return SecurityConstants.DEFAULT_PARAMETER_NAME_CODE_SMS;
+		}
+	},
+	/**
+	 * 鍥剧墖楠岃瘉鐮�
+	 */
+	IMAGE {
+		@Override
+		public String getParamNameOnValidate() {
+			return SecurityConstants.DEFAULT_PARAMETER_NAME_CODE_IMAGE;
+		}
+	};
+
+	/**
+	 * 鏍￠獙鏃朵粠璇锋眰涓幏鍙栫殑鍙傛暟鐨勫悕瀛�
+	 * @return
+	 */
+	public abstract String getParamNameOnValidate();
+
+}

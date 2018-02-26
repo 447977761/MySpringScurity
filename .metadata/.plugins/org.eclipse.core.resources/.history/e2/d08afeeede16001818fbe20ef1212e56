@@ -1,0 +1,65 @@
+/**
+ * 
+ */
+package authentication.copy;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysecurity.core.properties.LoginType;
+import com.mysecurity.core.properties.SecurityProperties;
+
+/**
+ * @author Liziyue
+ * 登陆成功处理器
+ */
+@Component 
+public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
+	//工具类    可以将authentication转换为字符串形式的json
+	@Autowired
+	private ObjectMapper objectMapper;
+	
+	//注入securityproperties
+	@Autowired
+	private SecurityProperties securityProperties;
+	
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	 */
+	//登录成功会被调用 Authentication接口为认证信息  之后通过objectMapper可以将登录的权限 用户名 sessionid等等变成json
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
+		logger.info("登陆成功");
+		
+		//判断返回什么格式
+		if(LoginType.JSON.equals(securityProperties.getBrowserProperties().getLoginType())) {
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().write(objectMapper.writeValueAsString(authentication));
+		} else {
+			//系统默认处理方式
+			super.onAuthenticationSuccess(request, response, authentication);
+		}
+		
+		
+		
+	}
+
+}

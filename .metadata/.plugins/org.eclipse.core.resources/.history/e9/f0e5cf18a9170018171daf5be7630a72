@@ -1,0 +1,13 @@
+/**
+ * 
+ */
+package com.mysecurity.core.properties;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class SocialProperties {
+	
+	private QQProperties
+}

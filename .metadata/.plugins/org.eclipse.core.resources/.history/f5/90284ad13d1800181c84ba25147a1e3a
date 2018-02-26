@@ -1,0 +1,27 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.connect;
+
+import org.springframework.social.oauth2.OAuth2Template;
+import org.springframework.web.client.RestTemplate;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQAuth2Template extends OAuth2Template {
+
+	public QQAuth2Template(String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl) {
+		super(clientId, clientSecret, authorizeUrl, accessTokenUrl);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	@Override
+	protected RestTemplate createRestTemplate() {
+		
+		return super.createRestTemplate();
+	}
+
+}

@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/mysecurity/core/properties/SecurityProperties.java=UTF-8
+encoding//src/main/java/com/mysecurity/core/validate/code/Impl/AbstractValidateCodeProcessor.java=UTF-8
+encoding//src/main/java/com/mysecurity/core/validate/code/ValidateCodeProcessor.java=UTF-8
+encoding//src/main/java/com/mysecurity/core/validate/code/ValidateCodeProcessorHolder.java=UTF-8
+encoding//src/main/java/com/mysecurity/core/validate/code/ValidateCodeType.java=UTF-8

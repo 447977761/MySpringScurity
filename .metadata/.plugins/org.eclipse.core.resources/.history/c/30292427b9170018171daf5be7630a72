@@ -1,0 +1,19 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social;
+
+import org.springframework.social.security.SpringSocialConfigurer;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class MySpringSocialConfigurer extends SpringSocialConfigurer {
+	
+	private void postprocess() {
+		// TODO Auto-generated method stub
+
+	}
+	
+}

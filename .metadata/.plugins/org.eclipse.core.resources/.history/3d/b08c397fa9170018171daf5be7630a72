@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.config;
+
+import org.springframework.social.config.annotation.SocialConfigurer;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQAutoConfig imp
+
+}

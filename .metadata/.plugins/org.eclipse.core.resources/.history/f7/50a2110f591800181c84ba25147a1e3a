@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.mysecurity.browser.support;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class SocialUserInfo {
+
+}

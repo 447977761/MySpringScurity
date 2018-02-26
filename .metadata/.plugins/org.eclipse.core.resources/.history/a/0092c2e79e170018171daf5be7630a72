@@ -1,0 +1,40 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.connect;
+
+import org.springframework.social.connect.ApiAdapter;
+import org.springframework.social.connect.ConnectionValues;
+import org.springframework.social.connect.UserProfile;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQAdapter implements ApiAdapter<A> {
+
+	@Override
+	public boolean test(A api) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setConnectionValues(A api, ConnectionValues values) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public UserProfile fetchUserProfile(A api) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateStatus(A api, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.connect;
+
+import org.springframework.social.connect.support.OAuth2ConnectionFactory;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQConnectionFactory extends OAuth2ConnectionFactory<S> {
+
+}

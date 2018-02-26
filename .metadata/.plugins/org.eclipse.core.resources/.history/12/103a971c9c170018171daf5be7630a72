@@ -1,0 +1,67 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.api;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
+import org.springframework.social.oauth2.TokenStrategy;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
+	
+	//从qq官网文档得到获取用户openid的url格式  %s表示变化部分
+	private static final String URL_GET_OPENID = "https://graph.qq.com/oauth2.0/me?access_token=%s";
+	//access_token父类已经帮助我们处理掉了 因此不用传参   第二个为appid  第三个为oppenid  
+	private static final String URL_GET_USERINFO = "https://graph.qq.com/user/get_user_info?oauth_consumer_key=%s&openid=%s";
+	
+	private String appId;
+	
+	private String openId;
+	
+	//工具类 转换json
+	private ObjectMapper objectMapper = new ObjectMapper();
+	
+	//access_token传给父类   appid为应用本身的配置信息
+	public QQImpl(String access_token,String appId) {
+		//TokenStrategy.ACCESS_TOKEN_PARAMETER表示一种传输策略  将access_token放到？后面当做变量传输
+		super(access_token,TokenStrategy.ACCESS_TOKEN_PARAMETER);
+	
+		this.appId = appId;
+		
+		//将access_token替换%s
+		String url = String.format(URL_GET_OPENID, access_token);
+		
+		//发送请求url  返回String形式的json 在QQ官网上有明确的格式样式
+		String result = getRestTemplate().getForObject(url, String.class);
+		
+		System.out.println(result);
+		
+		//获取openid
+		this.openId = StringUtils.substringBetween(result, "\"openid\":", "}");
+		
+		
+		
+	}
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see com.mysecurity.core.social.qq.api.QQ#getUserInfo()
+	 */
+	@Override
+	public QQUserInfo getUserInfo() {
+		//请求信息url  token由父类来帮我们处理
+		String url = String.format(URL_GET_USERINFO, appId,openId);
+		//获取请求结果  返回的是用户信息json
+		String result = getRestTemplate().getForObject(url, String.class);
+		System.out.println(result);
+		return objectMapper.readValue(result, QQUserInfo.class);
+	}
+
+}

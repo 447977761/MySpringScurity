@@ -1,0 +1,28 @@
+/**
+ * 
+ */
+package com.mysecurity.core.social.qq.connect;
+
+import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
+import org.springframework.social.oauth2.OAuth2Operations;
+
+import com.mysecurity.core.social.qq.api.QQ;
+
+/**
+ * @author Liziyue
+ * 泛型为api的接口
+ */
+public class QQServiceProvider extends AbstractOAuth2ServiceProvider<QQ> {
+
+	public QQServiceProvider(OAuth2Operations oauth2Operations) {
+		super(oauth2Operations);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public QQ getApi(String accessToken) {
+		
+		return new QQImpl();
+	}
+
+}

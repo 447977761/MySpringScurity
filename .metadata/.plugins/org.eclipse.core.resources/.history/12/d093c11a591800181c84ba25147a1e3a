@@ -1,0 +1,13 @@
+/**
+ * 
+ */
+package com.mysecurity.browser.support;
+
+/**
+ * @author Liziyue
+ *
+ */
+public class SocialUserInfo {
+	
+	private String providerId;
+}
